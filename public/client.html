@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>클라이언트02</title>
+    <title>클라이언트01</title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script  src = "/socket.io/socket.io.js" ></script> 
-    <script  src = "../sjw.js" ></script> 
     <script>
             var socket = io.connect('http://localhost:5034');
             socket.on('news', function (data) {
@@ -16,7 +15,7 @@
                 socket.emit('my other event', { my: 'data' });
             });
     </script>
-    <script src="/public/csv.js"></script>
+    <script src="server.js"></script>
     <script>
     var host;
     var port;
@@ -25,10 +24,9 @@
     $(function(){
         $("connectButton").bind('click', function(event) {
             println('connectButton 클릭!');
-            host = $('#hostInput').val();
+            host = $('#hostIpunt').val();
             port = $('#portInput').val();
-            console.log(host);
-            console.log(port);
+
             connectToServer();
         });
     });
@@ -41,8 +39,6 @@
 
         socket.on('connect', function(){
             println('웹소켓 연결 : '+url);
-
-
         });
 
         socket.on('disconnect', function(){
@@ -68,11 +64,5 @@
     <hr/>
     <p>결과 : </p>
     <div id = "result"></div>
-    <script>
-            $.ajax({
-                url: 'eat.csv',
-                dataType: 'text',
-            }).done(successFunction);
-        </script>
 </body>
 </html>
