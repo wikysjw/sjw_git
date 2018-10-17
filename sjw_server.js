@@ -40,11 +40,12 @@ io.sockets.on('connection', function(socket) {
     socket.remoteAddress = socket.request.connection._peername.address;
     socket.remotePort = socket.request.connection._peername.port;
 
-    socket.emit('language', function(ko){
-        fs.readFile('data/korean', 'utf-8', function(data){
-            console.dir(data);
-        });
+    fs.readFile('data/korean', 'utf-8', function(err,data){
+        socket.emit('language',data);
+        console.log(data);
     });
+    
+    
 
     socket.on('message', function(message) {
         console.log('메세지를 받았습니다.');
