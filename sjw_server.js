@@ -24,9 +24,6 @@ var server = http.createServer(app).listen(app.get('port'), function() {
     console.log('서버가 시작되었습니다. 포트 : ' + app.get('port'));
 });
 
-var ko = fs.readFile('data/korean', 'utf-8', function(error, data) {
-    console.log(data);
-});
 var en = fs.readFile('data/english', 'utf-8', function(error, data) {
     console.log(data);
 });
@@ -43,8 +40,11 @@ io.sockets.on('connection', function(socket) {
     socket.remoteAddress = socket.request.connection._peername.address;
     socket.remotePort = socket.request.connection._peername.port;
 
-    socket.emit('language', ko);
-    console.log(ko);
+    socket.emit('language', function(ko){
+        fs.readFile('data/korean', 'utf-8', function(data){
+            console.dir(data);
+        });
+    });
 
     socket.on('message', function(message) {
         console.log('메세지를 받았습니다.');

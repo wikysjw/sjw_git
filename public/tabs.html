@@ -25,12 +25,16 @@
   .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 40em; border: 4px solid #aaaaaa;}
   </style>
   <script>
-  socket = io.connect('localhost:5034');
   socket.on('connect', function(){
       console.log('웹소켓 연결 !');
 
+      socket.on('message', function(message) {
+          socket.emit('haha');
+      });
+
+
       socket.on('language', function(ko) {
-          console.log(ko);
+          console.dir('한글:'+ ko);
       });
   });
 </script>
