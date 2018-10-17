@@ -4,10 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>jQuery UI Tabs - Vertical Tabs functionality</title>
-  <link rel="stylesheet" href="../src/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script  src = "/socket.io/socket.io.js" ></script> 
+    <script>
+            var socket = io.connect('http://localhost:5034'); 
+    </script>
   <script>
   $( function() {
     $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
@@ -18,10 +20,20 @@
   .ui-tabs-vertical { width: 55em; }
   .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
   .ui-tabs-vertical .ui-tabs-nav li { border: 4px solid #aaaaaa; clear: left; width: 100%; border-bottom-width: 4px !important; border-right-width: 0 !important; margin: 0 0 .2em 0; }
-  .ui-tabs-vertical .ui-tabs-nav li a { display:block; color: black }
+  .ui-tabs-vertical .ui-tabs-nav li a { display:block; color: black; text-decoration: none }
   .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; }
   .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 40em; border: 4px solid #aaaaaa;}
   </style>
+  <script>
+  socket = io.connect('localhost:5034');
+  socket.on('connect', function(){
+      console.log('웹소켓 연결 !');
+
+      socket.on('language', function(ko) {
+          console.log(ko);
+      });
+  });
+</script>
 </head>
 <body>
  

@@ -6,6 +6,8 @@ var static = require('serve-static');
 
 var socketio = require('socket.io');
 
+var fs = require('fs');
+
 var express = require('express');
 
 var app = express();
@@ -22,6 +24,16 @@ var server = http.createServer(app).listen(app.get('port'), function() {
     console.log('서버가 시작되었습니다. 포트 : ' + app.get('port'));
 });
 
+var ko = fs.readFile('data/korean', 'utf-8', function(error, data) {
+    console.log(data);
+});
+var en = fs.readFile('data/english', 'utf-8', function(error, data) {
+    console.log(data);
+});
+var jp = fs.readFile('data/japanese', 'utf-8', function(error, data) {
+    console.log(data);
+});
+
 var io = socketio.listen(server);
 console.log('응답 대기중...');
 
@@ -30,6 +42,9 @@ io.sockets.on('connection', function(socket) {
 
     socket.remoteAddress = socket.request.connection._peername.address;
     socket.remotePort = socket.request.connection._peername.port;
+
+    socket.emit('language', ko);
+    console.log(ko);
 
     socket.on('message', function(message) {
         console.log('메세지를 받았습니다.');
