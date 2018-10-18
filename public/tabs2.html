@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Tabs - Collapse content</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script  src = "/socket.io/socket.io.js" ></script> 
+    <script>
+            var socket = io.connect('http://localhost:5034'); 
+    </script>
+  <script>
+      socket.on('connect', function(){
+        console.log('웹소켓 연결 !');
+        socket.on('filelist', function(data) {
+            console.log('파일 목록 : '+ data);
+            
+            /*$('#list').append(`<li><a href="#tabs-1">${data[0]}</a></li>`);
+            $('#list').append(`<li><a href="#tabs-2">${data[1]}</a></li>`);
+            $('#list').append(`<li><a href="#tabs-3">${data[2]}</a></li>`);*/
+        });
+
+        socket.on('language', function(data) {
+            $('#tab-1').append('<p>'+data+'</p>');
+            console.log(data);
+        });
+        socket.on('language2', function(data) {
+            $('#tab-2').append('<p>'+data+'</p>');
+            console.log(data);
+        });
+        socket.on('language3', function(data) {
+            $('#tab-3').append('<p>'+data+'</p>');
+            console.log(data);
+        });
+        $( function() {
+    $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+    $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+    $( "#tab" ).tabs().removeClass( "ui-tabs-vertical ui-helper-clearfix" );
+    $( "#tab li" ).removeClass( "ui-corner-left" ).addClass( "ui-corner-top" );
+  } );
+      });
+  </script>
+  <style>
+    .ui-tabs-vertical { width: 55em; }
+    .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
+    .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
+    .ui-tabs-vertical .ui-tabs-nav li a { display:block;}
+    .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; }
+    .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 40em;}
+    </style>
+  <script>
+  $( function() {
+    $( "#tab" ).tabs({
+      collapsible: true
+    });
+    });
+  </script>
+</head>
+<body>
+        <div id="tabs" >
+                <ul>
+                  <li><a href="#tabs-1-1">txt</a></li>
+                  <li><a href="#tabs-2-1">css</a></li>
+                </ul>
+                <div id="tabs-1-1">
+                        <div id="tab">
+                                <ul id="list">
+                                  <li><a href="#tab-1">english</a></li>
+                                  <li><a href="#tab-2">japanese</a></li>
+                                  <li><a href="#tab-3">korean</a></li>
+                                </ul>
+                                <div id="tab-1">
+                                </div>
+                                <div id="tab-2">
+                                </div>
+                                <div id="tab-3">
+                                </div>
+                              </div>
+                </div>
+                <div id="tabs-2-1">
+                  <p>css</p>
+                </div>
+              </div>
+ 
+
+ 
+ 
+</body>
+</html>

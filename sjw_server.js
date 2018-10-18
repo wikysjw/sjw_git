@@ -32,7 +32,7 @@ io.sockets.on('connection', function(socket) {
 
     socket.remoteAddress = socket.request.connection._peername.address;
     socket.remotePort = socket.request.connection._peername.port;
-
+/*
     fs.readdir('data', 'utf-8', function(err, filelist) {
         socket.emit('filelist',filelist);
     })
@@ -48,6 +48,33 @@ io.sockets.on('connection', function(socket) {
     fs.readFile(`data/korean`, 'utf-8', function(err,data){
         socket.emit('language3',data);
     });
+*/
+
+var fs = require('fs');
+fs.readdir('data', 'utf-8', function(err, filelist) {
+    
+
+    for(let i = 0; i < filelist.length; i++){
+        console.log(filelist[i]);
+        function emitdata(callbackFunc){
+            fs.readFile(`data/${filelist[i]}`, 'utf-8', function(err, data){
+                callbackFunc(data);
+            });
+        }
+    }
+    for (let i = 0 ; i<filelist.length; i++){
+        emitdata(function(data) {
+            function emit2(data){
+                socket.emit(`language${i}`,data);
+                console.log(`language${i}`);
+            }
+            emit2(data);
+            
+            
+        });
+    }
+    
+});
 
     socket.on('message', function(message) {
         console.log('메세지를 받았습니다.');
