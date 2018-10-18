@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Tabs - Collapse content</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script  src = "/socket.io/socket.io.js" ></script> 
+    <script>
+            var socket = io.connect('http://localhost:5034'); 
+    </script>
+  <script>
+      socket.on('connect', function(){
+        console.log('웹소켓 연결 !');
+        socket.on('filelist', function(data) {
+            console.log('파일 목록 : '+ data);
+            for(var i = 0; i < data.length;i++){
+            $('#list').append(`<li><a href="#tabs-${i+1}">${data[i]}</a></li>`);
+            console.log(data[i]);    
+        }
+        for(var i = 0; i < data.length; i++){
+            socket.on(`language${i}`, function(word){
+                $(`#tabs-${i+1}`).append('<p>'+word+'</p>');
+                console.log(word);
+            });
+        }
+            /*$('#list').append(`<li><a href="#tabs-0">${data[0]}</a></li>`);
+            $('#list').append(`<li><a href="#tabs-1">${data[1]}</a></li>`);
+            $('#list').append(`<li><a href="#tabs-2">${data[2]}</a></li>`);*/
+        });
+
+        /*socket.on('language', function(data) {
+            $('#tabs-1').append('<p>'+data+'</p>');
+        });
+        socket.on('language2', function(data) {
+            $('#tabs-2').append('<p>'+data+'</p>');
+        });
+        socket.on('language3', function(data) {
+            $('#tabs-3').append('<p>'+data+'</p>');
+        });*/
+      });
+  </script>
+  <script>
+  $( function() {
+    $( "#tabs" ).tabs({
+      collapsible: true
+    });
+  } );
+  </script>
+</head>
+<body>
+ 
+<div id="tabs">
+  <ul id="list">
+    
+  </ul>
+  <div id="tabs-1">
+  </div>
+  <div id="tabs-2">
+  </div>
+  <div id="tabs-3">
+  </div>
+</div>
+ 
+ 
+</body>
+</html

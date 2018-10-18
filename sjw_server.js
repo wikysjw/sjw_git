@@ -35,9 +35,22 @@ io.sockets.on('connection', function(socket) {
 
     fs.readdir('data', 'utf-8', function(err, filelist) {
         socket.emit('filelist',filelist);
-    })
+        for(var i = 0; i < filelist.length; i++){
+            console.log(filelist[i]);
+            function emitdata(callbackFunc){
+            fs.readFile(`data/${filelist[i]}`, 'utf-8', function(err, data){
+                callbackFunc(data);
+                console.log(data);
+            });
+        }
+        emitdata(function(data) {
+            socket.emit(`language${i}`, data);
+            console.log(`language${i}`);
+        });
+        }
+    });
 
-    fs.readFile(`data/english`, 'utf-8', function(err,data){
+    /*fs.readFile(`data/english`, 'utf-8', function(err,data){
         socket.emit('language',data);
     });
 
@@ -47,7 +60,7 @@ io.sockets.on('connection', function(socket) {
 
     fs.readFile(`data/korean`, 'utf-8', function(err,data){
         socket.emit('language3',data);
-    });
+    });*/
 
     socket.on('message', function(message) {
         console.log('메세지를 받았습니다.');
