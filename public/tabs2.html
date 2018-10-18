@@ -76,6 +76,13 @@
     $( "#tab" ).tabs().removeClass( "ui-tabs-vertical ui-helper-clearfix" );
     $( "#tab li" ).removeClass( "ui-corner-left" ).removeClass( "ui-corner-top" );
     });
+    $( function() {
+    $( "#tab2" ).tabs({
+      collapsible: true
+    });
+    $( "#tab2" ).tabs().removeClass( "ui-tabs-vertical ui-helper-clearfix" );
+    $( "#tab2 li" ).removeClass( "ui-corner-left" ).removeClass( "ui-corner-top" );
+    });
   </script>
 </head>
 <body>
@@ -97,11 +104,11 @@
                                 </div>
                                 <div id="tab-3">
                                 </div>
-                              </div>
+                        </div>
                 </div>
                 <div id="tabs-2-1">
-                    <div id="tab">
-                        <ul id="list">
+                    <div id="tab2">
+                        <ul id="list2">
                                 <li><a href="#tab-4">english.csv</a></li>
                                 <li><a href="#tab-5">japanese.csv</a></li>
                                 <li><a href="#tab-6">korean.csv</a></li>
@@ -112,9 +119,9 @@
                               </div>
                               <div id="tab-6">
                               </div>
-                        </div>
+                    </div>
                 </div>
-              </div>
+        </div>
  
 
  

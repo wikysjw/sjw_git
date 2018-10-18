@@ -54,20 +54,7 @@ io.sockets.on('connection', function(socket) {
     fs.readdir('csv', 'utf-8', function(err, filelist) {
         socket.emit('filelist2',filelist);
     })
-
-    fs.readFile(`data/english.csv`, 'utf-8', function(err,data){
-        
-        var stream = fs.createReadStream("./csv/english.csv", {encoding: "utf8"});
-
-        var csvStream = csv()
-            .on("data", function(data){
-                socket.emit("language4",data);
-            })
-        stream.pipe(csvStream);
-    });
-
-    
-        
+     
         var stream = fs.createReadStream("./csv/english.csv", {encoding: "utf8"});
 
         var csvStream = csv()
