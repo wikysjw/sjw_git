@@ -22,6 +22,14 @@
             $('#list').append(`<li><a href="#tabs-3">${data[2]}</a></li>`);*/
         });
 
+        socket.on('filelist2', function(data) {
+            console.log('파일 목록 : '+ data);
+            
+            /*$('#list').append(`<li><a href="#tabs-1">${data[0]}</a></li>`);
+            $('#list').append(`<li><a href="#tabs-2">${data[1]}</a></li>`);
+            $('#list').append(`<li><a href="#tabs-3">${data[2]}</a></li>`);*/
+        });
+
         socket.on('language', function(data) {
             $('#tab-1').append('<p>'+data+'</p>');
             console.log(data);
@@ -34,11 +42,21 @@
             $('#tab-3').append('<p>'+data+'</p>');
             console.log(data);
         });
+        socket.on('language4', function(data) {
+            $('#tab-4').append('<p>'+data+'</p>');
+            console.log(data);
+        });
+        socket.on('language5', function(data) {
+            $('#tab-5').append('<p>'+data+'</p>');
+            console.log(data);
+        });
+        socket.on('language6', function(data) {
+            $('#tab-6').append('<p>'+data+'</p>');
+            console.log(data);
+        });
         $( function() {
     $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
     $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
-    $( "#tab" ).tabs().removeClass( "ui-tabs-vertical ui-helper-clearfix" );
-    $( "#tab li" ).removeClass( "ui-corner-left" ).addClass( "ui-corner-top" );
   } );
       });
   </script>
@@ -55,6 +73,8 @@
     $( "#tab" ).tabs({
       collapsible: true
     });
+    $( "#tab" ).tabs().removeClass( "ui-tabs-vertical ui-helper-clearfix" );
+    $( "#tab li" ).removeClass( "ui-corner-left" ).removeClass( "ui-corner-top" );
     });
   </script>
 </head>
@@ -80,7 +100,19 @@
                               </div>
                 </div>
                 <div id="tabs-2-1">
-                  <p>css</p>
+                    <div id="tab">
+                        <ul id="list">
+                                <li><a href="#tab-4">english.csv</a></li>
+                                <li><a href="#tab-5">japanese.csv</a></li>
+                                <li><a href="#tab-6">korean.csv</a></li>
+                              </ul>
+                              <div id="tab-4">
+                              </div>
+                              <div id="tab-5">
+                              </div>
+                              <div id="tab-6">
+                              </div>
+                        </div>
                 </div>
               </div>
  

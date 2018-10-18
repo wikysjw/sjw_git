@@ -8,6 +8,8 @@ var socketio = require('socket.io');
 
 var fs = require('fs');
 
+var csv = require('fast-csv');
+
 var express = require('express');
 
 var app = express();
@@ -48,6 +50,48 @@ io.sockets.on('connection', function(socket) {
     fs.readFile(`data/korean`, 'utf-8', function(err,data){
         socket.emit('language3',data);
     });
+
+    fs.readdir('csv', 'utf-8', function(err, filelist) {
+        socket.emit('filelist2',filelist);
+    })
+
+    fs.readFile(`data/english.csv`, 'utf-8', function(err,data){
+        
+        var stream = fs.createReadStream("./csv/english.csv", {encoding: "utf8"});
+
+        var csvStream = csv()
+            .on("data", function(data){
+                socket.emit("language4",data);
+            })
+        stream.pipe(csvStream);
+    });
+
+    
+        
+        var stream = fs.createReadStream("./csv/english.csv", {encoding: "utf8"});
+
+        var csvStream = csv()
+            .on("data", function(data){
+                socket.emit("language4",data);
+            })
+        stream.pipe(csvStream);
+   
+
+        var stream = fs.createReadStream("./csv/japanese.csv", {encoding: "utf8"});
+
+        var csvStream = csv()
+            .on("data", function(data){
+                socket.emit("language5",data);
+            })
+        stream.pipe(csvStream);
+
+        var stream = fs.createReadStream("./csv/korean.csv", {encoding: "utf8"});
+
+        var csvStream = csv()
+            .on("data", function(data){
+                socket.emit("language6",data);
+            })
+        stream.pipe(csvStream);
 
     socket.on('message', function(message) {
         console.log('메세지를 받았습니다.');
