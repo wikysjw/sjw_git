@@ -3,15 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>jQuery UI Tabs - Collapse content</title>
+  <title>탭2</title>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script  src = "/socket.io/socket.io.js" ></script> 
+  <script src="http://d3js.org/d3.v3.min.js"></script>
     <script>
-            var socket = io.connect('http://localhost:5034'); 
+            var socket = io.connect('192.168.0.157:5034'); 
     </script>
   <script>
+      
+    
       socket.on('connect', function(){
         console.log('웹소켓 연결 !');
         socket.on('filelist', function(data) {
@@ -24,7 +27,20 @@
 
         socket.on('filelist2', function(data) {
             console.log('파일 목록 : '+ data);
-            
+            for(let i = 0; i<data.length;i++){
+            $('#tab-4').append(d3.text(`./${data[i]}`, function(data) {
+                                            var parsedCSV = d3.csv.parseRows(data);
+                                            var container = d3.select("body")
+                                                .append("table")
+                                                .selectAll("tr")
+                                                    .data(parsedCSV).enter()
+                                                    .append("tr")
+                                                .selectAll("td")
+                                                    .data(function(d) { return d; }).enter()
+                                                    .append("td")
+                                                    .text(function(d) { return d; });
+                                        }));
+                                    }
             /*$('#list').append(`<li><a href="#tabs-1">${data[0]}</a></li>`);
             $('#list').append(`<li><a href="#tabs-2">${data[1]}</a></li>`);
             $('#list').append(`<li><a href="#tabs-3">${data[2]}</a></li>`);*/
@@ -32,28 +48,31 @@
 
         socket.on('language', function(data) {
             $('#tab-1').append('<p>'+data+'</p>');
-            console.log(data);
+            
         });
         socket.on('language2', function(data) {
             $('#tab-2').append('<p>'+data+'</p>');
-            console.log(data);
+            
         });
         socket.on('language3', function(data) {
             $('#tab-3').append('<p>'+data+'</p>');
-            console.log(data);
+            
         });
         socket.on('language4', function(data) {
-            $('#tab-4').append('<p>'+data+'</p>');
-            console.log(data);
+           
+            
         });
         socket.on('language5', function(data) {
+            
             $('#tab-5').append('<p>'+data+'</p>');
-            console.log(data);
+            
         });
         socket.on('language6', function(data) {
             $('#tab-6').append('<p>'+data+'</p>');
-            console.log(data);
+           
+            
         });
+        
         $( function() {
     $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
     $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
@@ -84,6 +103,18 @@
     $( "#tab2 li" ).removeClass( "ui-corner-left" ).removeClass( "ui-corner-top" );
     });
   </script>
+   <style>
+        table {
+            border-collapse: collapse;
+            border: 2px black solid;
+            font: 12px sans-serif;
+        }
+
+        td {
+            border: 1px black solid;
+            padding: 5px;
+        }
+    </style>
 </head>
 <body>
         <div id="tabs" >

@@ -62,6 +62,7 @@ io.sockets.on('connection', function(socket) {
                 socket.emit("language4",data);
             })
         stream.pipe(csvStream);
+        
    
 
         var stream = fs.createReadStream("./csv/japanese.csv", {encoding: "utf8"});
@@ -87,6 +88,9 @@ io.sockets.on('connection', function(socket) {
         if(message.recepient == 'ALL') {
             console.dir('나를 포함한 모든 클라이언트에게 메세지를 전달.');
             io.sockets.emit('message',message);
+        }else if(message.recepient == 'exit'){
+            io.close();
         }
     });
 });
+
