@@ -515,6 +515,7 @@
       "resolved": "https://registry.npmjs.org/cycle/-/cycle-1.0.3.tgz",
       "version": "1.0.3"
     },
+    "d3": "^5.7.0",
     "dashdash": {
       "integrity": "sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA=",
       "requires": {

@@ -28,29 +28,38 @@
   socket.on('connect', function(){
       console.log('웹소켓 연결 !');
 
-      socket.on('message', function(message) {
-          socket.emit('haha');
-      });
-
       socket.on('filelist', function(data) {
           console.log('파일 목록 : '+ data);
-          /*for(var i = 0; i < data.length;i++){
+          /*for(var i = 0; i < data.length; i++){
           $('#list').append(`<li><a href="#tabs-${i}">${data[i]}</a></li>`);
           }*/
           $('#list').append(`<li><a href="#tabs-0">${data[0]}</a></li>`);
           $('#list').append(`<li><a href="#tabs-1">${data[1]}</a></li>`);
           $('#list').append(`<li><a href="#tabs-2">${data[2]}</a></li>`);
-      });
-
-      socket.on('language', function(data) {
-          $('#result').append('<p>'+data+'</p>');
+          
+          for(var u = 0; u < data.length; u++){
+            (function (closed_i){
+            socket.on(`language${closed_i}`, function(data) {
+            console.log(data);
+            $(`#result${closed_i}`).append('<p>'+data+'</p>');
+          });
+        })(u);
+        }
+        });
+              
+        
+      /*socket.on('language', function(data) {
+        console.log(data);
+        for(var i = 0; i < data.length; i++){
+          $(`#result${i}`).append('<p>'+data[i]+'</p>');
+        }
       });
       socket.on('language2', function(data) {
           $('#result2').append('<p>'+data+'</p>');
       });
       socket.on('language3', function(data) {
           $('#result3').append('<p>'+data+'</p>');
-      });
+      });*/
   });
 </script>
 </head>
@@ -60,15 +69,15 @@
   <ul id="list"></ul>
   <div id="tabs-0">
     <h2>Content heading 1</h2>
-    <div id="result"></div>
+    <div id="result0"></div>
   </div>
   <div id="tabs-1">
     <h2>Content heading 2</h2>
-    <div id="result2"></div>
+    <div id="result1"></div>
   </div>
   <div id="tabs-2">
     <h2>Content heading 3</h2>
-    <div id="result3"></div>
+    <div id="result2"></div>
   </div>
 </div>
  

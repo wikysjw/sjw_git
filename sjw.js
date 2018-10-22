@@ -37,50 +37,28 @@ io.sockets.on('connection', function(socket) {
 
     fs.readdir('data', 'utf-8', function(err, filelist) {
         socket.emit('filelist',filelist);
+        for(var i = 0; i < filelist.length; i++){
+            (function (closed_i){
+            fs.readFile(`data/${filelist[(closed_i-1)]}`, 'utf-8', function(err,data){
+                socket.emit(`language${closed_i}`,data);
+            });
+        })(i+1);
+        }
     })
-
-    fs.readFile(`data/english`, 'utf-8', function(err,data){
-        socket.emit('language',data);
-    });
-
-    fs.readFile(`data/japanese`, 'utf-8', function(err,data){
-        socket.emit('language2',data);
-    });
-
-    fs.readFile(`data/korean`, 'utf-8', function(err,data){
-        socket.emit('language3',data);
-    });
 
     fs.readdir('csv', 'utf-8', function(err, filelist) {
         socket.emit('filelist2',filelist);
     })
+
+    /* fs.readdir('csv', 'utf-8', function(err, filelist) {
+        var sendMsg = {
+            CODE: 10000,
+            FileName: "english.csv",
+            Data: filelist
+        }
+        socket.emit('message',sendMsg);
+    }) */
      
-        var stream = fs.createReadStream("./csv/english.csv", {encoding: "utf8"});
-
-        var csvStream = csv()
-            .on("data", function(data){
-                socket.emit("language4",data);
-            })
-        stream.pipe(csvStream);
-        
-   
-
-        var stream = fs.createReadStream("./csv/japanese.csv", {encoding: "utf8"});
-
-        var csvStream = csv()
-            .on("data", function(data){
-                socket.emit("language5",data);
-            })
-        stream.pipe(csvStream);
-
-        var stream = fs.createReadStream("./csv/korean.csv", {encoding: "utf8"});
-
-        var csvStream = csv()
-            .on("data", function(data){
-                socket.emit("language6",data);
-            })
-        stream.pipe(csvStream);
-
     socket.on('message', function(message) {
         console.log('메세지를 받았습니다.');
         console.dir(message);
@@ -93,4 +71,3 @@ io.sockets.on('connection', function(socket) {
         }
     });
 });
-

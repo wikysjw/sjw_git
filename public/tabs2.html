@@ -13,82 +13,9 @@
             var socket = io.connect('192.168.0.157:5034'); 
     </script>
   <script>
-      
-    
-      socket.on('connect', function(){
-        console.log('웹소켓 연결 !');
-        socket.on('filelist', function(data) {
-            console.log('파일 목록 : '+ data);
-            
-            /*$('#list').append(`<li><a href="#tabs-1">${data[0]}</a></li>`);
-            $('#list').append(`<li><a href="#tabs-2">${data[1]}</a></li>`);
-            $('#list').append(`<li><a href="#tabs-3">${data[2]}</a></li>`);*/
-        });
-
-        socket.on('filelist2', function(data) {
-            console.log('파일 목록 : '+ data);
-            for(let i = 0; i<data.length;i++){
-            $('#tab-4').append(d3.text(`./${data[i]}`, function(data) {
-                                            var parsedCSV = d3.csv.parseRows(data);
-                                            var container = d3.select("body")
-                                                .append("table")
-                                                .selectAll("tr")
-                                                    .data(parsedCSV).enter()
-                                                    .append("tr")
-                                                .selectAll("td")
-                                                    .data(function(d) { return d; }).enter()
-                                                    .append("td")
-                                                    .text(function(d) { return d; });
-                                        }));
-                                    }
-            /*$('#list').append(`<li><a href="#tabs-1">${data[0]}</a></li>`);
-            $('#list').append(`<li><a href="#tabs-2">${data[1]}</a></li>`);
-            $('#list').append(`<li><a href="#tabs-3">${data[2]}</a></li>`);*/
-        });
-
-        socket.on('language', function(data) {
-            $('#tab-1').append('<p>'+data+'</p>');
-            
-        });
-        socket.on('language2', function(data) {
-            $('#tab-2').append('<p>'+data+'</p>');
-            
-        });
-        socket.on('language3', function(data) {
-            $('#tab-3').append('<p>'+data+'</p>');
-            
-        });
-        socket.on('language4', function(data) {
-           
-            
-        });
-        socket.on('language5', function(data) {
-            
-            $('#tab-5').append('<p>'+data+'</p>');
-            
-        });
-        socket.on('language6', function(data) {
-            $('#tab-6').append('<p>'+data+'</p>');
-           
-            
-        });
-        
-        $( function() {
+  $( function() {
     $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
     $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
-  } );
-      });
-  </script>
-  <style>
-    .ui-tabs-vertical { width: 55em; }
-    .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
-    .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
-    .ui-tabs-vertical .ui-tabs-nav li a { display:block;}
-    .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; }
-    .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 40em;}
-    </style>
-  <script>
-  $( function() {
     $( "#tab" ).tabs({
       collapsible: true
     });
@@ -103,6 +30,50 @@
     $( "#tab2 li" ).removeClass( "ui-corner-left" ).removeClass( "ui-corner-top" );
     });
   </script>
+  <script>
+      socket.on('connect', function(){
+        console.log('웹소켓 연결 !');
+        socket.on('filelist', function(data) {
+            console.log('파일 목록 : '+ data);
+            for(var j = 0; j < data.length; j++){
+                $(`#list`).append(`<li><a href="#tab-${j}">`+data[j]+'</a></li>');
+                (function (closed_j) {
+                socket.on(`language${closed_j}`, function(data) {
+                    console.log(data);
+                    $(`#tab-${closed_j}`).append('<p>'+data+'</p>');
+                });
+            })(j+1);
+            }
+            
+        });
+        socket.on('filelist2', function(data) {
+            console.log('파일 목록 : '+ data);
+            for(let i = 0; i<data.length;i++){
+                console.log(data[i]);
+            d3.text(`./${data[i]}`, function(data) {
+                var parsedCSV = d3.csv.parseRows(data);
+                var container = d3.select(`#tab-${i+4}`)
+                    .append("table")
+                    .selectAll("tr")
+                        .data(parsedCSV).enter()
+                        .append("tr")
+                    .selectAll("td")
+                        .data(function(d) { return d; }).enter()
+                        .append("td")
+                        .text(function(d) { return d; });
+                });
+            }
+        });
+      }); 
+  </script>
+  <style>
+    .ui-tabs-vertical { width: 55em; }
+    .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
+    .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
+    .ui-tabs-vertical .ui-tabs-nav li a { display:block;}
+    .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; }
+    .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 40em;}
+    </style>
    <style>
         table {
             border-collapse: collapse;
@@ -153,9 +124,5 @@
                     </div>
                 </div>
         </div>
- 
-
- 
- 
 </body>
 </html>
