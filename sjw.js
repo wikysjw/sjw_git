@@ -35,27 +35,33 @@ io.sockets.on('connection', function(socket) {
     socket.remoteAddress = socket.request.connection._peername.address;
     socket.remotePort = socket.request.connection._peername.port;
 
-    fs.readdir('data', 'utf-8', function(err, filelist) {
+    fs.readdir('./public/data', 'utf-8', function(err, filelist) {
         socket.emit('filelist',filelist);
         for(var i = 0; i < filelist.length; i++){
             (function (closed_i){
-            fs.readFile(`data/${filelist[(closed_i-1)]}`, 'utf-8', function(err,data){
+            fs.readFile(`./public/data/${filelist[(closed_i-1)]}`, 'utf-8', function(err,data){
                 socket.emit(`language${closed_i}`,data);
             });
         })(i+1);
         }
     })
 
-    fs.readdir('csv', 'utf-8', function(err, filelist) {
+    fs.readdir('./public/csv', 'utf-8', function(err, filelist) {
         socket.emit('filelist2',filelist);
     })
 
     socket.on('text_content', function(content){
         socket.on('text_title',function(title) {
-            fs.writeFile(`./data/${title}`, content, 'utf8',function(err) {
+            fs.writeFile(`./public/data/${title}`, content, 'utf8',function(err) {
                 if(err) throw err;
                 console.log('file write success')
             });
+        });
+    });
+
+    socket.on('file_load', function(loadfile) {
+        fs.readFile(`./public/data/${loadfile}`, 'utf-8', function(err, data){
+            socket.emit(`loadfile`, data);
         });
     });
 
