@@ -8,20 +8,44 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script  src = "/socket.io/socket.io.js" ></script> 
     <script>
-        function downloadInnerHtml(elementid, htmllinereplace, filename, mimeType, extension) {
-            var elHtml = $(elementid).html();
-            if (htmllinereplace) elHtml = elHtml.replace(/\<br\>/gi,'\n');
-                var link = document.createElement('a');
-                link.setAttribute('download', filename + extension);
-                link.setAttribute('href', 'data:' + mimeType  +  ';charset=utf-8,' + encodeURIComponent(elHtml));
-                link.click();
-        }
+            var socket = io.connect('192.168.0.157:5034'); 
+    </script>
+    <script>
+        socket.on('connect', function(){
+            console.log('웹소켓 연결 !');
+            // var content = $("#text_content").val();
+            // var title = $("#text_title").val();
+            // var content = 'aa';
+            // var title = 'sd';
+            $("#save").click(function(){ 
+                var content = document.getElementById("text_content").value;
+                var title = document.getElementById("text_title").value;
+                socket.emit('text_content',content);
+                socket.emit('text_title',title);
+                console.log(content);
+            }); 
+        });
 
-$( function() {
-   $("#save").click(function(){ downloadInnerHtml('#text_content', 'true', '#text_tit2311e', './../data', '.txt')}); 
-});
-</script>
+
+
+
+        // function downloadInnerHtml(elementid, htmllinereplace, filename, mimeType, extension) {
+        //     var elHtml = $(elementid).html();
+        //     if (htmllinereplace) elHtml = elHtml.replace(/\<br\>/gi,'\n');
+        //         var link = document.createElement('a');
+        //         link.setAttribute('download', filename + extension);
+        //         link.setAttribute('href', 'data:' + mimeType  +  ';charset=utf-8,' + encodeURIComponent(elHtml));
+        //         link.click();
+        // }
+
+    /*  $( function() {
+        var content = $("#text_content").val();
+        $("#save").click(function(){ downloadInnerHtml(content, 'true', '#text_tit2311e', './../data', '.txt')}); 
+        console.log(content);
+        }); */
+    </script>
 
 </head>
 <body>
@@ -29,6 +53,6 @@ $( function() {
                 <button id="save">저장</button><button id="fileopen">불러오기</button><br>
                 <textarea id="text_content" cols="60" rows="20" style="resize: none;"></textarea><br>
                 <textarea id="text_title" cols="15" rows="1" style="resize: none; overflow: hidden;"></textarea>
-            </div>
+        </div>
 </body>
 </html>

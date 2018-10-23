@@ -53,6 +53,13 @@
   <script>
       socket.on('connect', function(){
         console.log('웹소켓 연결 !');
+        $("#save").click(function(){ 
+                var content = document.getElementById("text_content").value;
+                var title = document.getElementById("text_title").value;
+                socket.emit('text_content',content);
+                socket.emit('text_title',title);
+                console.log(content);
+            }); 
         socket.on('filelist', function(data) {
             console.log('파일 목록 : '+ data);
             for(var j = 0; j < data.length; j++){

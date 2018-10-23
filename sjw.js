@@ -50,6 +50,15 @@ io.sockets.on('connection', function(socket) {
         socket.emit('filelist2',filelist);
     })
 
+    socket.on('text_content', function(content){
+        socket.on('text_title',function(title) {
+            fs.writeFile(`./data/${title}`, content, 'utf8',function(err) {
+                if(err) throw err;
+                console.log('file write success')
+            });
+        });
+    });
+
     /* fs.readdir('csv', 'utf-8', function(err, filelist) {
         var sendMsg = {
             CODE: 10000,
