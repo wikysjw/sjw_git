@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>저----장</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        function downloadInnerHtml(elementid, htmllinereplace, filename, mimeType, extension) {
+            var elHtml = $(elementid).html();
+            if (htmllinereplace) elHtml = elHtml.replace(/\<br\>/gi,'\n');
+                var link = document.createElement('a');
+                link.setAttribute('download', filename + extension);
+                link.setAttribute('href', 'data:' + mimeType  +  ';charset=utf-8,' + encodeURIComponent(elHtml));
+                link.click();
+        }
+
+$( function() {
+   $("#save").click(function(){ downloadInnerHtml('#text_content', 'true', '#text_tit2311e', './../data', '.txt')}); 
+});
+</script>
+
+</head>
+<body>
+        <div id="tab-0">
+                <button id="save">저장</button><button id="fileopen">불러오기</button><br>
+                <textarea id="text_content" cols="60" rows="20" style="resize: none;"></textarea><br>
+                <textarea id="text_title" cols="15" rows="1" style="resize: none; overflow: hidden;"></textarea>
+            </div>
+</body>
+</html>

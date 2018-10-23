@@ -56,7 +56,8 @@
         socket.on('filelist', function(data) {
             console.log('파일 목록 : '+ data);
             for(var j = 0; j < data.length; j++){
-                $(`#list`).append(`<li><a href="#tab-${j}">`+data[j]+'</a></li>');
+                // $(`#list`).append(`<li><a href="#tab-${j}">`+data[j]+'</a></li>');
+                // $(`#tab`).append(`<div id="tab-${j}"></div>`);
                 (function (closed_j) {
                 socket.on(`language${closed_j}`, function(data) {
                     console.log(data);
@@ -96,10 +97,16 @@
                 <div id="tabs-1-1">
                         <div id="tab">
                                 <ul id="list">
+                                  <li><a href="#tab-0">textedit</a></li>
                                   <li><a href="#tab-1">english</a></li>
                                   <li><a href="#tab-2">japanese</a></li>
                                   <li><a href="#tab-3">korean</a></li>
                                 </ul>
+                                <div id="tab-0">
+                                    <button id="save">저장</button><button id="fileopen">불러오기</button><br>
+                                    <textarea id="text_content" cols="60" rows="20" style="resize: none;"></textarea><br>
+                                    <textarea id="text_title" cols="15" rows="1" style="resize: none; overflow: hidden;"></textarea>
+                                </div>
                                 <div id="tab-1">
                                 </div>
                                 <div id="tab-2">
