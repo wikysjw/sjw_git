@@ -1136,11 +1136,9 @@
       "resolved": "https://registry.npmjs.org/isstream/-/isstream-0.1.2.tgz",
       "version": "0.1.2"
     },
-    "jquery": {
-      "integrity": "sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==",
-      "resolved": "https://registry.npmjs.org/jquery/-/jquery-3.3.1.tgz",
-      "version": "3.3.1"
-    },
+    "jquery": "^3.3.1",
+    "jquery-easing": "0.0.1",
+    "jqueryfiletree": "^2.1.4",
     "jsbn": {
       "integrity": "sha1-peZUwuWi3rXyAdls77yoDA7y9RM=",
       "resolved": "https://registry.npmjs.org/jsbn/-/jsbn-0.1.1.tgz",
