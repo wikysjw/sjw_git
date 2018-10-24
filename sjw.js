@@ -8,8 +8,6 @@ var socketio = require('socket.io');
 
 var fs = require('fs');
 
-var csv = require('fast-csv');
-
 var express = require('express');
 
 var app = express();
