@@ -10,6 +10,7 @@
   <script  src = "/socket.io/socket.io.js" ></script> 
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <link rel="stylesheet" type="text/css" href="./semantic/semantic.css">
+  <link rel="stylesheet" type="text/css" href="./upload.css">
     <script src="./semantic/semantic.js"></script>
     <script>
             var socket = io.connect('192.168.0.157:5034'); 
@@ -73,10 +74,15 @@
                 console.log('BOLD!!!');
             });
         });
+        $("#ex_filename").click(function() {
+            // $(this).siblings('.upload-name').val(loadfile[2]);
+            
+        });
         $("#load").click(function() {
-                var load = document.getElementById("filesellect").value;
-                var loadfile = load.split('\\');
+            var load = document.getElementById("ex_filename").value;
+            var loadfile = load.split('\\');
                 socket.emit('file_load',loadfile[2]);
+                $(this).siblings('.upload-name').val(loadfile[2]); 
                 console.log(loadfile[2]);
         });
         socket.on('loadfile', function(data) {
@@ -135,7 +141,12 @@
                                   <li><a href="#tab-3">korean</a></li>
                                 </ul>
                                 <div id="tab-0">
-                                    <button id="save" class="ui button">저장</button><input type="file" id="filesellect" class="ui file"><button id="load" class="ui button">불러오기</button><br>
+                                    <button id="save" class="ui button">저장</button>
+                                    <input class="upload-name" value="" disabled="disabled">
+                                    <label for="ex_filename">파일선택</label>
+                                    <input type="file" id="ex_filename" class="upload-hidden">
+                                    <!-- <input type="file" id="filesellect"> -->
+                                    <button id="load" class="ui button">불러오기</button><br>
                                     <button id="bold" class="ui button">굵게</button><button id="italic" class="ui button">기울임</button><button id="color" class="ui button">색상</button><br>
                                     <div id="text_content" value="aa" contenteditable="true" style="width:400px; height:400px; border-style: solid;"></div>
                                     <textarea id="text_title" cols="15" rows="1" style="resize: none; overflow: hidden;"></textarea>

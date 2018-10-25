@@ -12,36 +12,42 @@
     </script>
   <script>
   $( function() {
-    $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
-    $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+    $( "#tabs" ).tabs();
   } );
   </script>
-  <style type="text/css">
+  <!-- <style type="text/css">
   .ui-tabs-vertical { width: 55em; }
   .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
   .ui-tabs-vertical .ui-tabs-nav li { border: 4px solid #aaaaaa; clear: left; width: 100%; border-bottom-width: 4px !important; border-right-width: 0 !important; margin: 0 0 .2em 0; }
   .ui-tabs-vertical .ui-tabs-nav li a { display:block; color: black; text-decoration: none }
   .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; }
   .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 40em; border: 4px solid #aaaaaa;}
-  </style>
+  </style> -->
   <script>
+    var list2 = '';
   socket.on('connect', function(){
       console.log('웹소켓 연결 !');
-
+    
       socket.on('filelist', function(data) {
           console.log('파일 목록 : '+ data);
-          /*for(var i = 0; i < data.length; i++){
-          $('#list').append(`<li><a href="#tabs-${i}">${data[i]}</a></li>`);
-          }*/
-          $('#list').append(`<li><a href="#tabs-0">${data[0]}</a></li>`);
-          $('#list').append(`<li><a href="#tabs-1">${data[1]}</a></li>`);
-          $('#list').append(`<li><a href="#tabs-2">${data[2]}</a></li>`);
+          for(var i = 0; i < data.length; i++){
+          var list = `<li role="tab" tabindex="-1" class="ui-tabs-tab ui-state-default ui-tab ui-corner-left" aria-controls="#tabs-${i}" aria-labelledby="ui-id-${i}" aria-selected="false" aria-expanded="false"><a href="#tabs-${i}" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-${i}">${data[i]}</a></li>`;
+           list2 += list;
+          console.log(list);
+          
+          }
+  $('#list').append(list2);
+          
+          // $('#list').append(`<li><a href="#tabs-0">${data[0]}</a></li>`);
+          // $('#list').append(`<li><a href="#tabs-1">${data[1]}</a></li>`);
+          // $('#list').append(`<li><a href="#tabs-2">${data[2]}</a></li>`);
           
           for(var u = 0; u < data.length; u++){
             (function (closed_i){
-            socket.on(`language${closed_i}`, function(data) {
-            console.log(data);
-            $(`#result${closed_i}`).append('<p>'+data+'</p>');
+            socket.on(`language${closed_i+1}`, function(data) {
+            var dd = '<p>'+data+'</p>';
+            console.log(dd);
+            $(`#result${closed_i}`).append(dd);
           });
         })(u);
         }
@@ -68,15 +74,12 @@
 <div id="tabs">
   <ul id="list"></ul>
   <div id="tabs-0">
-    <h2>Content heading 1</h2>
     <div id="result0"></div>
   </div>
   <div id="tabs-1">
-    <h2>Content heading 2</h2>
     <div id="result1"></div>
   </div>
   <div id="tabs-2">
-    <h2>Content heading 3</h2>
     <div id="result2"></div>
   </div>
 </div>

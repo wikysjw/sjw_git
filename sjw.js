@@ -14,11 +14,24 @@ var app = express();
 
 var cors = require('cors');
 
+// var cookieParser = require('cookie-parser');
+// var expressSession = require('express-session');
+
 app.use(cors());
+
+// 세션 값 넣기
+// app.use(cookieParser());
+// app.use(expressSession({
+//     secret:'my key',
+//     resave:true,
+//     saveUninitialized:true
+// }));
 
 app.set('port', process.env.PORT || 5034);
 
 app.use('/public', static(path.join(__dirname, 'public')));
+
+// app.use('/login')
 
 var server = http.createServer(app).listen(app.get('port'), function() {
     console.log('서버가 시작되었습니다. 포트 : ' + app.get('port'));
@@ -63,6 +76,7 @@ io.sockets.on('connection', function(socket) {
         });
     });
 
+    // 저장방식
     /* fs.readdir('csv', 'utf-8', function(err, filelist) {
         var sendMsg = {
             CODE: 10000,
