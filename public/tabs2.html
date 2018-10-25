@@ -92,6 +92,8 @@
             document.execCommand('foreColor', false, "rgb(255, 255, 0)");
             }else if($('#select_color').val() == 'l_green'){
             document.execCommand('foreColor', false, "rgb(0, 255, 0)");
+            }else if($('#select_color').val() == 'black'){
+            document.execCommand('foreColor', false, "rgb(0, 0, 0)");
             }
         });
         socket.on('loadfile', function(data) {
@@ -162,6 +164,7 @@
                                         <option value="red">RED</option>
                                         <option value="yellow">YELLOW</option>
                                         <option value="l_green">LIGHT GREEN</option>
+                                        <option value="black">BLACK</option>
                                     </select>
                                     <button id="color" class="ui button">색상</button><br>
                                     <div id="text_content" value="aa" contenteditable="true" style="width:400px; height:400px; border-style: solid;"></div>
