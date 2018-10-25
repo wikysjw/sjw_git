@@ -7,7 +7,7 @@
                               clip:rect(0,0,0,0); 
                               border: 0; } 
 #tab-0 label { display: inline-block; 
-    padding: 0.57555555em 1.5em 0.57555555em;
+                padding: 0.57555555em 1.5em 0.57555555em;
                  color: black; 
                  font-size: inherit; 
                  line-height: normal; 
@@ -30,3 +30,12 @@
                         -webkit-appearance: none; /* 네이티브 외형 감추기 */ 
                         -moz-appearance: none; 
                         appearance: none; }
+
+#select_color {
+    background-color: #E0E1E2;
+    padding: 0.57555555em 1.5em 0.57555555em;
+    border: none; 
+    border-radius: .25em; 
+    font-size: inherit; 
+    line-height: normal; 
+}
