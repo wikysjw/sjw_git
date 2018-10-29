@@ -37,15 +37,23 @@
           
           }
   $('#list').append(list2);
+
+          var di = '';
+          for(var j = 0; data.length; j++){
+            var di2 = `<div id="tabs-${j}"><div id="result${j}"></div></div>`
+            di =+ di2;
+          }
+          $('#tabs').append(di);
           
           // $('#list').append(`<li><a href="#tabs-0">${data[0]}</a></li>`);
           // $('#list').append(`<li><a href="#tabs-1">${data[1]}</a></li>`);
           // $('#list').append(`<li><a href="#tabs-2">${data[2]}</a></li>`);
-          
+          var ct = '';
           for(var u = 0; u < data.length; u++){
             (function (closed_i){
             socket.on(`language${closed_i+1}`, function(data) {
             var dd = '<p>'+data+'</p>';
+            ct += dd;
             console.log(dd);
             $(`#result${closed_i}`).append(dd);
           });
@@ -73,7 +81,7 @@
  
 <div id="tabs">
   <ul id="list"></ul>
-  <div id="tabs-0">
+  <!-- <div id="tabs-0">
     <div id="result0"></div>
   </div>
   <div id="tabs-1">
@@ -82,6 +90,9 @@
   <div id="tabs-2">
     <div id="result2"></div>
   </div>
+  <div id="tabs-3">
+    <div id="result3"></div>
+  </div> -->
 </div>
  
  

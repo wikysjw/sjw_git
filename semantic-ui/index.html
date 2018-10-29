@@ -1,44 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>semantic</title>
-    <link rel="stylesheet" type="text/css" href="../semantic/semantic.css">
-    <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-    <script src="../semantic/semantic.js"></script>
+	<title>parse</title>      
 </head>
+
 <body>
-        <div class="ui floating dropdown labeled search icon button">
-                <i class="world icon"></i>
-                <span class="text">Select Language</span>
-                <div class="menu">
-                  <div class="item">Arabic</div>
-                  <div class="item">Chinese</div>
-                  <div class="item">Danish</div>
-                  <div class="item">Dutch</div>
-                  <div class="item">English</div>
-                  <div class="item">French</div>
-                  <div class="item">German</div>
-                  <div class="item">Greek</div>
-                  <div class="item">Hungarian</div>
-                  <div class="item">Italian</div>
-                  <div class="item">Japanese</div>
-                  <div class="item">Korean</div>
-                  <div class="item">Lithuanian</div>
-                  <div class="item">Persian</div>
-                  <div class="item">Polish</div>
-                  <div class="item">Portuguese</div>
-                  <div class="item">Russian</div>
-                  <div class="item">Spanish</div>
-                  <div class="item">Swedish</div>
-                  <div class="item">Turkish</div>
-                  <div class="item">Vietnamese</div>
-                </div>
-              </div>
+	<p id="json"></p>
+
+	<script>
+		// JSON 형식의 문자열
+		var data = '{"name": "식빵", "family": "웰시코기", "age": 1, "weight": 2.14}';
+		
+		var dog = JSON.parse(data);	// JSON 형식의 문자열을 자바스크립트 객체로 변환함.
+		document.getElementById("json").innerHTML = dog + "<br>";
+		document.getElementById("json").innerHTML += dog.name + ", " + dog.family;
+	</script>
 </body>
+
 </html>

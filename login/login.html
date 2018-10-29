@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>로그인 세션관리</title>
+    <link rel="shortcut icon" href="./saver.ico">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="../public/semantic/semantic.css">
+    <script src="../public/semantic/semantic.js"></script>
+    <script  src = "/socket.io/socket.io.js" ></script> 
+    <script>
+            var socket = io.connect('192.168.0.157:5034'); 
+    </script>
+    <script>
+        socket.on('connect', function(){
+            $("#logininfo_send").click(function() {
+                var login_info = {
+                    "id":$("#login_id").val(),
+                    "pw":$("#login_pw").val()
+                }
+                socket.emit('login_info', login_info);
+                console.log(login_info);
+            });
+            console.log("connect!!!");
+            socket.on('clear', function(ii) {
+                location.href=ii;
+            });
+            socket.on('bbi', function(bbi) {
+                alert(bbi);
+            });
+        });
+    </script>
+</head>
+<body>
+    <br>
+    <h2 class="ui center aligned icon header">
+        <font style="color: #0084FF; font-size: 80px; font-weight: bold;">SAVER</font>
+    </h2>
+    <br>
+    <center>
+    <div class="ui input">
+        <input type="text" id="login_id" placeholder="아이디" size="40px">
+    </div><br>
+    <div class="ui input">
+        <input type="password" id="login_pw" placeholder="비밀번호" size="40px">
+    </div><br><br>
+    <button id="logininfo_send" class="ui button" style="background-color:#0084FF; width: 321px">로그인</button>
+    </center>
+</body>

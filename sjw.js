@@ -14,6 +14,16 @@ var app = express();
 
 var cors = require('cors');
 
+const mysql = require('mysql');
+
+const connection = mysql.createConnection({
+    host     : 'sjw9606.cafe24.com',
+    user     : 'sjw9606',
+    password : 'ms6600!!',
+    port     : '3306',
+    database : 'sjw9606',
+})
+
 // var cookieParser = require('cookie-parser');
 // var expressSession = require('express-session');
 
@@ -31,7 +41,7 @@ app.set('port', process.env.PORT || 5034);
 
 app.use('/public', static(path.join(__dirname, 'public')));
 
-// app.use('/login')
+app.use('/login', static(path.join(__dirname, 'login')));
 
 var server = http.createServer(app).listen(app.get('port'), function() {
     console.log('서버가 시작되었습니다. 포트 : ' + app.get('port'));
@@ -73,6 +83,27 @@ io.sockets.on('connection', function(socket) {
     socket.on('file_load', function(loadfile) {
         fs.readFile(`./public/data/${loadfile}`, 'utf-8', function(err, data){
             socket.emit(`loadfile`, data);
+        });
+    });
+    var ID ='';
+    socket.on('login_info', function(info) {
+        console.log(info);
+        // for(var obj in info){
+        //     console.log(obj +''+info[obj]);
+        //     ID = info[obj];
+        // }
+        var ID2 = info['id'];
+        var PW2 = info['pw'];
+        console.log(ID2);
+        connection.query(`select PW from login where ID="${ID2}"`, (error, results) => {
+           var osd = results[0].PW.toString('utf8');
+            if(osd == PW2){
+                var tabs2 = '../public/tabs2.html';
+                socket.emit('clear',tabs2);
+            }else{
+                var bbi = '비밀번호가 틀렸습니다.';
+                socket.emit('bbi',bbi);
+            }
         });
     });
 
