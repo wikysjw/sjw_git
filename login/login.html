@@ -24,6 +24,9 @@
                 socket.emit('login_info', login_info);
                 console.log(login_info);
             });
+            $("#mv_list").click(function() {
+                location.href="../public/tabs2.html";
+            });
             console.log("connect!!!");
             socket.on('clear', function(ii) {
                 location.href=ii;
@@ -31,6 +34,10 @@
             socket.on('bbi', function(bbi) {
                 alert(bbi);
             });
+            socket.on('bbi2', function(bbi2) {
+                alert(bbi2);
+            });
+            
         });
     </script>
 </head>
@@ -47,6 +54,7 @@
     <div class="ui input">
         <input type="password" id="login_pw" placeholder="비밀번호" size="40px">
     </div><br><br>
-    <button id="logininfo_send" class="ui button" style="background-color:#0084FF; width: 321px">로그인</button>
+    <button id="logininfo_send" class="ui button" style="background-color:#0084FF; width: 321px">로그인</button><br><br>
+    <button id="mv_list" class="ui button" style="background-color:#0084FF; width: 321px">게시판 이동</button>
     </center>
 </body>

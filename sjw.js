@@ -24,13 +24,17 @@ const connection = mysql.createConnection({
     database : 'sjw9606',
 })
 
-// var cookieParser = require('cookie-parser');
+var cookie = require('cookie');
+
+const bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended: false}));
 // var expressSession = require('express-session');
 
 app.use(cors());
 
 // 세션 값 넣기
-// app.use(cookieParser());
 // app.use(expressSession({
 //     secret:'my key',
 //     resave:true,
@@ -41,11 +45,21 @@ app.set('port', process.env.PORT || 5034);
 
 app.use('/public', static(path.join(__dirname, 'public')));
 
-app.use('/login', static(path.join(__dirname, 'login')));
+app.use('/login',  static(path.join(__dirname, 'login')));
 
-var server = http.createServer(app).listen(app.get('port'), function() {
-    console.log('서버가 시작되었습니다. 포트 : ' + app.get('port'));
+app.get('/login', function(req,res) {
+    res.writeHead(302, {
+        'Set-Cookie':[
+          `email=${post.email}`,
+          `password=${post.password}`,
+          `nickname=egoing`
+        ]
+    });
 });
+
+
+var server = http.createServer(app).listen(app.get('port'), function(req,res) {
+    console.log('서버가 시작되었습니다. 포트 : ' + app.get('port'));
 
 var io = socketio.listen(server);
 console.log('응답 대기중...');
@@ -85,7 +99,6 @@ io.sockets.on('connection', function(socket) {
             socket.emit(`loadfile`, data);
         });
     });
-    var ID ='';
     socket.on('login_info', function(info) {
         console.log(info);
         // for(var obj in info){
@@ -94,15 +107,24 @@ io.sockets.on('connection', function(socket) {
         // }
         var ID2 = info['id'];
         var PW2 = info['pw'];
-        console.log(ID2);
-        connection.query(`select PW from login where ID="${ID2}"`, (error, results) => {
-           var osd = results[0].PW.toString('utf8');
-            if(osd == PW2){
-                var tabs2 = '../public/tabs2.html';
-                socket.emit('clear',tabs2);
+        connection.query(`select ID from login where ID="${ID2}"`, (error, results) => {
+            var osd2 = results;
+            console.log(osd2);
+            if(osd2==""){
+                var bbi2 ='없는 아이디입니다. 다시 확인 해주세요.';
+                socket.emit('bbi2',bbi2);
             }else{
-                var bbi = '비밀번호가 틀렸습니다.';
-                socket.emit('bbi',bbi);
+                connection.query(`select PW from login where ID="${ID2}"`, (error, results) => {
+                var osd = results[0].PW.toString('utf8');
+                console.log(osd);
+                    if(osd == PW2){
+                        var tabs2 = '../public/tabs2.html';
+                        socket.emit('clear',tabs2);
+                    }else{
+                        var bbi = '비밀번호가 틀렸습니다.';
+                        socket.emit('bbi',bbi);
+                    }
+                });
             }
         });
     });
@@ -128,4 +150,11 @@ io.sockets.on('connection', function(socket) {
             io.close();
         }
     });
+});
+
+app.get('/public', function(req,res) {
+    res.cookie('id',12,{maxAge:1000,path:'/public/'});
+    res.redirect('/public/tabs2.html');
+});
+
 });

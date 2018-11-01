@@ -186,30 +186,7 @@
       "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-3.5.1.tgz",
       "version": "3.5.1"
     },
-    "body-parser": {
-      "dependencies": {
-        "qs": {
-          "integrity": "sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==",
-          "resolved": "https://registry.npmjs.org/qs/-/qs-6.5.2.tgz",
-          "version": "6.5.2"
-        }
-      },
-      "integrity": "sha1-WykhmP/dVTs6DyDe0FkrlWlVyLQ=",
-      "requires": {
-        "bytes": "3.0.0",
-        "content-type": "~1.0.4",
-        "debug": "2.6.9",
-        "depd": "~1.1.2",
-        "http-errors": "~1.6.3",
-        "iconv-lite": "0.4.23",
-        "on-finished": "~2.3.0",
-        "qs": "6.5.2",
-        "raw-body": "2.3.3",
-        "type-is": "~1.6.16"
-      },
-      "resolved": "https://registry.npmjs.org/body-parser/-/body-parser-1.18.3.tgz",
-      "version": "1.18.3"
-    },
+    "body-parser": "^1.18.3",
     "brace-expansion": {
       "integrity": "sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==",
       "requires": {
@@ -465,20 +442,8 @@
       "resolved": "https://registry.npmjs.org/content-type/-/content-type-1.0.4.tgz",
       "version": "1.0.4"
     },
-    "cookie": {
-      "integrity": "sha1-5+Ch+e9DtMi6klxcWpboBtFoc7s=",
-      "resolved": "https://registry.npmjs.org/cookie/-/cookie-0.3.1.tgz",
-      "version": "0.3.1"
-    },
-    "cookie-parser": {
-      "integrity": "sha1-D+MfoZ0AC5X0qt8fU/3CuKIDuqU=",
-      "requires": {
-        "cookie": "0.3.1",
-        "cookie-signature": "1.0.6"
-      },
-      "resolved": "https://registry.npmjs.org/cookie-parser/-/cookie-parser-1.4.3.tgz",
-      "version": "1.4.3"
-    },
+    "cookie": "^0.3.1",
+    "cookie-parser": "^1.4.3",
     "cookie-signature": {
       "integrity": "sha1-4wOogrNCzD7oylE6eZmXNNqzriw=",
       "resolved": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.6.tgz",
@@ -2090,6 +2055,7 @@
       "resolved": "https://registry.npmjs.org/socket.io-client/-/socket.io-client-2.1.1.tgz",
       "version": "2.1.1"
     },
+    "socket.io-cookie-parser": "^1.0.0",
     "socket.io-parser": {
       "dependencies": {
         "debug": {
