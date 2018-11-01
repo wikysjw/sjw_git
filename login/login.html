@@ -23,6 +23,9 @@
                 }
                 socket.emit('login_info', login_info);
                 console.log(login_info);
+                document.cookie = `ID=${$("#login_id").val()}; path=/`;
+                document.cookie = `PW=${$("#login_pw").val()}; path=/`;
+                
             });
             $("#mv_list").click(function() {
                 location.href="../public/tabs2.html";

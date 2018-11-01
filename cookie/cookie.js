@@ -1,5 +1,18 @@
 var http = require('http');
 var cookie = require('cookie');
+var express = require('express');
+var app = express();
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+app.get('/lo', function(req,res) {
+    response.cookie('id',1,{maxAge:100000});
+    res.redirect('/');
+});
+app.get('/state', function(req,res) {
+    res.send('cookie : ' + req.cookies.key);
+});
+
+
 http.createServer(function(requset, response) {
     console.log(requset.headers.cookie);
     var cookies = {};
@@ -20,3 +33,6 @@ http.createServer(function(requset, response) {
 
     response.end('쿠키');
 }).listen(5034);
+
+var x = document.cookie;
+console.log(x);

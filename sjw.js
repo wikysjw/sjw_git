@@ -57,7 +57,6 @@ app.get('/login', function(req,res) {
     });
 });
 
-
 var server = http.createServer(app).listen(app.get('port'), function(req,res) {
     console.log('서버가 시작되었습니다. 포트 : ' + app.get('port'));
 
@@ -101,15 +100,10 @@ io.sockets.on('connection', function(socket) {
     });
     socket.on('login_info', function(info) {
         console.log(info);
-        // for(var obj in info){
-        //     console.log(obj +''+info[obj]);
-        //     ID = info[obj];
-        // }
         var ID2 = info['id'];
         var PW2 = info['pw'];
         connection.query(`select ID from login where ID="${ID2}"`, (error, results) => {
             var osd2 = results;
-            console.log(osd2);
             if(osd2==""){
                 var bbi2 ='없는 아이디입니다. 다시 확인 해주세요.';
                 socket.emit('bbi2',bbi2);
@@ -142,7 +136,6 @@ io.sockets.on('connection', function(socket) {
     socket.on('message', function(message) {
         console.log('메세지를 받았습니다.');
         console.dir(message);
-
         if(message.recepient == 'ALL') {
             console.dir('나를 포함한 모든 클라이언트에게 메세지를 전달.');
             io.sockets.emit('message',message);
@@ -151,10 +144,4 @@ io.sockets.on('connection', function(socket) {
         }
     });
 });
-
-app.get('/public', function(req,res) {
-    res.cookie('id',12,{maxAge:1000,path:'/public/'});
-    res.redirect('/public/tabs2.html');
-});
-
 });
