@@ -56,6 +56,8 @@
     </style>
   <script>
       socket.on('connect', function(){
+        var cookie_ID = document.cookie.split(';')[0].slice(3,100);
+        $("#cookie").append(`${cookie_ID}`+'님 환영합니다.');
         console.log('웹소켓 연결 !');
         $("#save").click(function(){ 
                 var content = document.getElementById("text_content").innerHTML;
@@ -96,6 +98,11 @@
             }else if($('#select_color').val() == 'black'){
             document.execCommand('foreColor', false, "rgb(0, 0, 0)");
             }
+        });
+        $("#logout").click(function() {
+            document.cookie = "ID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "PW=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            location.href='/login/login.html';
         });
         socket.on('loadfile', function(data) {
             console.log(data);
@@ -141,8 +148,8 @@
 <body>
     <br>
         <h2 class="ui center aligned icon header">
-                <font style="color: #0084FF; font-size: 80px; font-weight: bold;">SAVER</font>
-            </h2><button class="ui button" style="position:absolute; right:0;">로그아웃</button>
+                <font style="color: #0084FF; font-size: 80px; font-weight: bold;">SAVER</font><p id="cookie"></p>
+            </h2><button id="logout" class="ui button" >로그아웃</button>
         <div id="tabs" >
                 <ul>
                   <li><a href="#tabs-1-1">txt</a></li>
