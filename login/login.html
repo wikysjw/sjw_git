@@ -23,8 +23,7 @@
                 }
                 socket.emit('login_info', login_info);
                 console.log(login_info);
-                document.cookie = `ID=${$("#login_id").val()}; path=/`;
-                document.cookie = `PW=${$("#login_pw").val()}; path=/`;
+                
                 
             });
             $("#mv_list").click(function() {
@@ -33,6 +32,8 @@
             console.log("connect!!!");
             socket.on('clear', function(ii) {
                 location.href=ii;
+                document.cookie = `ID=${$("#login_id").val()}; path=/`;
+                document.cookie = `PW=${$("#login_pw").val()}; path=/`;
             });
             socket.on('bbi', function(bbi) {
                 alert(bbi);
