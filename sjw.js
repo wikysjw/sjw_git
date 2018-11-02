@@ -47,14 +47,34 @@ app.use('/public', static(path.join(__dirname, 'public')));
 
 app.use('/login',  static(path.join(__dirname, 'login')));
 
-app.get('/login', function(req,res) {
-    res.writeHead(302, {
-        'Set-Cookie':[
-          `email=${post.email}`,
-          `password=${post.password}`,
-          `nickname=egoing`
-        ]
+app.get(`/public`, function(req,res) {
+    connection.query(`select ID from login where ID="${req.cookies.ID}"`, (error, results) => {
+        var osd = results;
+        if( req.cookies.ID === undefined){
+            res.redirect('/login/login.html');
+            console.log('Cookies:', req.cookies.ID)
+            console.log(osd);
+        }else{
+            res.redirect('/public/tabs2.html');
+            console.log('Cookies:', req.cookies.ID)
+            console.log(osd);
+        }
     });
+    
+
+/* function authIsOwner(request,response){
+    var isOwner = false;
+    var cookies = {};
+    if(request.cookies){
+      cookies = cookie.parse(request.cookies);
+      console.log(cookies);
+    }
+    if(cookies.ID === 'egoing777@gmail.com' && cookies.PW === '111111'){
+      isOwner = true;
+    }
+    return isOwner;
+  }
+  authIsOwner(); */
 });
 
 var server = http.createServer(app).listen(app.get('port'), function(req,res) {
