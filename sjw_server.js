@@ -49,6 +49,7 @@ fs.readdir('data', 'utf-8', function(err, filelist) {
     socket.on('message', function(message) {
         console.log('메세지를 받았습니다.');
         console.dir(message);
+        
 
         if(message.recepient == 'ALL') {
             console.dir('나를 포함한 모든 클라이언트에게 메세지를 전달.');
